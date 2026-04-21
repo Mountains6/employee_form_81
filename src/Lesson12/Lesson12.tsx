@@ -1,8 +1,7 @@
-
 import EmployeeForm from "../components/EmployeeForm/EmployeeForm";
 import { Lesson12Wrapper } from "./styles";
 
-function Lesson11() {
+function Lesson12() {
   return (
     <Lesson12Wrapper>
      <EmployeeForm />
@@ -10,4 +9,4 @@ function Lesson11() {
   );
 }
 
-export default Lesson11;
+export default Lesson12;
