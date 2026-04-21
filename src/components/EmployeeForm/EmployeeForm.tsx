@@ -8,28 +8,30 @@ import { ResultCard } from "../ResultCard/ResultCard";
 import { FormContainer, FormComponent, Title, MainWrapper } from "./styles";
 import type { EmployeeFormValues } from "./types";
 
-function CreateEmployeeForm() {
-  const [submittedData, setSubmittedData] =
-    useState<EmployeeFormValues | null>(null);
+function EmployeeForm() {
+  const [submittedData, setSubmittedData] = useState<EmployeeFormValues | null>(
+    null,
+  );
 
-  // Создание валидационной схемы
   const schema = Yup.object().shape({
+    name: Yup.string()
+      .required("Field name is required")
+      .min(2, "Min 2 symbols")
+      .max(50, "Max 50 symbols"),
     surname: Yup.string()
       .required("Field surname is required")
       .max(15, "Max 15 symbols"),
-
     age: Yup.number()
       .required("Field age is required")
       .typeError("Value age must be number")
       .min(18, "Min age 18")
       .max(80, "Max age 80"),
-
     jobPosition: Yup.string().max(30, "Max 30 symbols"),
   });
 
-  // Настройка формы через formik
   const formik = useFormik({
     initialValues: {
+      name: "",
       surname: "",
       age: "",
       jobPosition: "",
@@ -44,15 +46,20 @@ function CreateEmployeeForm() {
     },
   });
 
-  console.log(formik);
-
   return (
     <MainWrapper>
       <Title>Create Employee</Title>
-
       <FormContainer>
-        {/* handleSubmit необходимо привязывать к form */}
         <FormComponent onSubmit={formik.handleSubmit}>
+          <Input
+            name="name"
+            label="Name*"
+            placeholder="Enter name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            error={formik.errors.name}
+          />
+
           <Input
             name="surname"
             label="Surname*"
@@ -90,4 +97,4 @@ function CreateEmployeeForm() {
   );
 }
 
-export default CreateEmployeeForm;
+export default EmployeeForm;
